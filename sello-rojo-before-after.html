@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sello Rojo Before After</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:transparent}
+#slider{position:relative;width:100%;max-width:1440px;aspect-ratio:2/1;overflow:hidden;cursor:ew-resize;touch-action:none;user-select:none}
+#slider img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+#after{clip-path:inset(0 0 0 50%)}
+#handle{position:absolute;top:0;bottom:0;left:50%;width:2px;background:white;transform:translateX(-50%);pointer-events:none}
+#knob{position:absolute;left:50%;top:50%;width:44px;height:44px;border-radius:50%;background:white;transform:translate(-50%,-50%);box-shadow:0 2px 10px #0004;display:grid;place-items:center;font:700 18px Arial;color:#555;pointer-events:none}
+.label{position:absolute;top:16px;padding:7px 11px;background:#0009;color:white;border-radius:3px;font:600 12px Arial;letter-spacing:.04em;pointer-events:none}
+.before{left:16px}.after{right:16px}
+</style>
+</head>
+<body>
+<div id="slider" aria-label="Comparador antes y después">
+<img src="https://i.imgur.com/JN2hObV.png" alt="Antes">
+<img id="after" src="https://i.imgur.com/BCsA4wD.png" alt="Después">
+<div id="handle"></div><div id="knob">↔</div>
+<div class="label before">ANTES</div><div class="label after">DESPUÉS</div>
+</div>
+<script>
+const s=document.getElementById('slider'),a=document.getElementById('after'),h=document.getElementById('handle'),k=document.getElementById('knob');
+function setX(x){const r=s.getBoundingClientRect();let p=(x-r.left)/r.width*100;p=Math.max(0,Math.min(100,p));a.style.clipPath=`inset(0 0 0 ${p}%)`;h.style.left=k.style.left=p+'%';}
+s.addEventListener('pointerdown',e=>{s.setPointerCapture(e.pointerId);setX(e.clientX)});
+s.addEventListener('pointermove',e=>{if(e.buttons)setX(e.clientX)});
+</script>
+</body>
+</html>
